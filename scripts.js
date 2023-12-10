@@ -22,41 +22,81 @@ progressBar.addEventListener('input', e=>{
 
 
 
-function addVolumeBtn(){
-    let volumeBar;
-    let buttonsContainer = document.querySelector('#actions');
-    let firstButton = document.querySelector('#actions > #like-button');
-    let exampleButtonStyle = window.getComputedStyle(document.querySelector('#actions > #like-button button'));
-    let volumeBtnContainer = document.createElement('div');
-    let volumeBtn = document.createElement('button');
+
+function createButtonDialog(){
+    let defaultButtonContainers, defaultFirstChildButton, defaultButtonStyle;
+    let btnContainer, btn;
+    let rangeBar;
+
+    defaultButtonContainers = document.querySelector('#actions');
+    defaultFirstChildButton = document.querySelector('#actions > #like-button');
+    defaultButtonStyle = window.getComputedStyle(document.querySelector('#actions > #like-button button'));
+
+    btnContainer = document.createElement('div');
+    defaultButtonContainers.insertBefore(btnContainer, defaultFirstChildButton);
+    btn = createButton(defaultButtonStyle);
+    btnContainer.appendChild(btn);
+    rangeBar = addBarDialog(btn);
+    
+    
+
+
+    return btnContainer;
+}
+
+function createButton(exampleButtonStyle){
+    //create a button that has the same given button style
+    let volumeBtn;
+    volumeBtn = document.createElement('button');
     volumeBtn.setAttribute('type', 'button');
     volumeBtn.style.height = exampleButtonStyle.height;
     volumeBtn.style.width = exampleButtonStyle.width;
     volumeBtn.style.border = exampleButtonStyle.border;
     volumeBtn.style.borderRadius = exampleButtonStyle.borderRadius;
-    volumeBtnContainer.appendChild(volumeBtn);
     volumeBtn.style.backgroundColor = 'green';
-    buttonsContainer.insertBefore(volumeBtnContainer, firstButton);
-    volumeBar = addBarDialog(volumeBtn, )
-    volumeBtnContainer.addEventListener('mouseover', (e)=>{
-        volumeBar.show();
-    });
-    volumeBtnContainer.addEventListener('mouseout', (e)=>{
-        volumeBar.close();
-    });
-    return volumeBtnContainer;
+    return volumeBtn;
 }
-function addBarDialog(btn, valueRange){
-    let volumeBarContainer = document.createElement('dialog');
+function addBarDialog(btn){
+    let rangeBarContainer, rangeBar;
+    rangeBarContainer = document.createElement('dialog');
     btn.style.position = 'relative';
-    volumeBarContainer.style.position = 'absolute';
-    volumeBarContainer.style.bottom = btn.clientHeight + 'px';
-    volumeBarContainer.style.left = '0px';
-    volumeBarContainer.style.width = btn.clientWidth + 'px';
-    volumeBarContainer.style.height = (btn.clientHeight*10) + 'px';
-    volumeBarContainer.style.backgroundColor = 'white';
-    btn.appendChild(volumeBarContainer);
-    return volumeBarContainer;
+    btn.style.display = 'block';
+    rangeBarContainer.style.position = 'absolute';
+    rangeBarContainer.style.bottom = btn.clientHeight + 'px';
+    rangeBarContainer.style.left = '0px';
+    rangeBarContainer.style.width = btn.clientWidth + 'px';
+    rangeBarContainer.style.height = (btn.clientHeight*10) + 'px';
+    rangeBarContainer.style.backgroundColor = 'white';
+    rangeBarContainer.style.display = 'flex';
+    rangeBarContainer.style.alignItems = 'center';
+    rangeBarContainer.style.justifyContent = 'center';
+    rangeBarContainer.style.padding = '0';
+    btn.appendChild(rangeBarContainer);
+    btn.addEventListener('mouseover', (e)=>{
+        rangeBarContainer.show();
+    });
+    btn.addEventListener('mouseout', (e)=>{
+        rangeBarContainer.close();
+    });
+    
+    rangeBar = document.createElement('input');
+    rangeBar.setAttribute('type', 'range');
+    rangeBar.setAttribute('max', '100');
+    rangeBar.style.flexShrink = '0';
+    rangeBar.style.width = (getIntFromPixels(rangeBarContainer.style.height) - 20) + 'px';
+    rangeBar.style.transform = 'rotate(-90deg)';
+    rangeBarContainer.appendChild(rangeBar);
+    return rangeBarContainer;
 }
 
-let volumeBtn = addVolumeBtn();
+function getIntFromPixels(size){
+    let intSize;
+    let sizeArr;
+    sizeArr = size.split('');
+    if(sizeArr[0]=='-'){sizeArr.shift()};
+    intSize = parseInt(sizeArr.slice(0,-2).join(''));
+
+    return intSize;
+}
+
+let test = createButtonDialog();
