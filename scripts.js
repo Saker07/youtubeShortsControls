@@ -23,7 +23,7 @@ progressBar.addEventListener('input', e=>{
 
 
 
-function createButtonDialog(){
+function createButtonDialog(callback){
     let defaultButtonContainers, defaultFirstChildButton, defaultButtonStyle;
     let btnContainer, btn;
     let rangeBar;
@@ -36,7 +36,7 @@ function createButtonDialog(){
     defaultButtonContainers.insertBefore(btnContainer, defaultFirstChildButton);
     btn = createButton(defaultButtonStyle);
     btnContainer.appendChild(btn);
-    rangeBar = addBarDialog(btn);
+    rangeBar = addBarDialog(btn, callback);
     
     
 
@@ -56,7 +56,7 @@ function createButton(exampleButtonStyle){
     volumeBtn.style.backgroundColor = 'green';
     return volumeBtn;
 }
-function addBarDialog(btn){
+function addBarDialog(btn, callback = null){
     let rangeBarContainer, rangeBar;
     rangeBarContainer = document.createElement('dialog');
     btn.style.position = 'relative';
@@ -86,7 +86,12 @@ function addBarDialog(btn){
     rangeBar.style.width = (getIntFromPixels(rangeBarContainer.style.height) - 20) + 'px';
     rangeBar.style.transform = 'rotate(-90deg)';
     rangeBarContainer.appendChild(rangeBar);
+    rangeBar.addEventListener('change', callback)
     return rangeBarContainer;
+}
+
+function adjustVolume(e){
+    videoElement.volume = e.target.value/100;
 }
 
 function getIntFromPixels(size){
@@ -99,4 +104,5 @@ function getIntFromPixels(size){
     return intSize;
 }
 
-let test = createButtonDialog();
+console.log(videoElement.volume)
+let test = createButtonDialog(adjustVolume);
