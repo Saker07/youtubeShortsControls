@@ -15,13 +15,15 @@ const styleSheet = `
   position: absolute;
   left: 0px;
   background-color:white;
-  display:flex;
   align-items:center;
   justify-content: center;
   padding: 0;
   border: none;
   border-radius: 20px;
   background-color: #5b5b5b14;
+}
+.rangeBarContainer[open] {
+  display: flex;
 }
 .rangeBar {
   flex-shrink: 0;
