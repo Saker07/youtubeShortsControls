@@ -29,6 +29,10 @@ const styleSheet = `
   flex-shrink: 0;
   transform: rotate(-90deg);
 }
+.volumeIcon {
+  height: 100%;
+  width: 100%;
+}
 `;
 injectCSS(styleSheet);
 
@@ -62,15 +66,18 @@ function addProgressBar(videoElement) {
     e.stopPropagation();
     videoElement.currentTime = e.target.value;
   });
+
   setInterval(() => {
     progressBar.value = videoElement.currentTime;
   });
 }
 
-function createButtonDialog(callback) {
+function createVolButtonWithDialog(callback) {
   let defaultButtonContainers, defaultFirstChildButton, defaultButtonStyle;
-  let btnContainer, btn;
+  let btnContainer, btn, volumeImg;
   let rangeBar;
+  const volumeIconSrc = chrome.runtime.getURL("volumeIcon.svg");
+  const mutedIconSrc = chrome.runtime.getURL("mutedIcon.svg");
 
   defaultButtonContainers = document.querySelector("#actions");
   defaultFirstChildButton = document.querySelector("#actions > #like-button");
@@ -82,7 +89,24 @@ function createButtonDialog(callback) {
   defaultButtonContainers.insertBefore(btnContainer, defaultFirstChildButton);
   btn = createButton(defaultButtonStyle);
   btnContainer.appendChild(btn);
-  rangeBar = addBarDialog(btn, callback);
+  addBarDialog(btn, callback);
+
+  volumeImg = document.createElement("img");
+  setMultipleAttributes(volumeImg, {
+    src: volumeIconSrc,
+    class: "volumeIcon",
+  });
+  btn.appendChild(volumeImg);
+  volumeImg.addEventListener("click", (e) => {
+    if (videoElement.muted) {
+      videoElement.muted = false;
+      e.target.src = volumeIconSrc;
+    } else {
+      videoElement.muted = true;
+      e.target.src = mutedIconSrc;
+    }
+    console.log(videoElement.muted === true);
+  });
 
   return btnContainer;
 }
@@ -160,5 +184,5 @@ function injectCSS(styleString) {
   return styleTag;
 }
 
-let test = createButtonDialog(adjustVolume);
+let test = createVolButtonWithDialog(adjustVolume);
 let progressBarTest = addProgressBar(videoElement);
