@@ -14,6 +14,7 @@ function addProgressBar(videoElement) {
   opacity: 0.9;
   accent-color: red;
   transform: translate(0, 50%);
+  transition: all 1s;
   `;
 
   progressBar = document.createElement("input");
@@ -27,6 +28,9 @@ function addProgressBar(videoElement) {
   progressBar.addEventListener("input", (e) => {
     e.stopPropagation();
     videoElement.currentTime = e.target.value;
+  });
+  setInterval((e) => {
+    progressBar.value = videoElement.currentTime;
   });
 }
 
