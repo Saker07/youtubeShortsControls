@@ -99,13 +99,8 @@ function createVolButtonWithDialog(callback) {
   });
   btn.appendChild(volumeImg);
   volumeImg.addEventListener("click", (e) => {
-    if (videoElement.muted) {
-      videoElement.muted = false;
-      e.target.src = volumeIconSrc;
-    } else {
-      videoElement.muted = true;
-      e.target.src = mutedIconSrc;
-    }
+    videoElement.muted = !videoElement.muted;
+    e.target.src = videoElement.muted ? mutedIconSrc : volumeIconSrc;
     console.log(videoElement.muted === true);
   });
 
