@@ -1,11 +1,6 @@
 let videoElement;
-
-videoElement = document.querySelector(".video-stream.html5-main-video");
-
-function addProgressBar(videoElement) {
-  let progressBar, videoDimension;
-  const progressBarContainer = document.querySelector("#progress-bar-line");
-  const progressBarStyle = `
+const styleSheet = `
+.progressBar {
   position: absolute;
   bottom: 0;
   width: 99%;
@@ -15,14 +10,38 @@ function addProgressBar(videoElement) {
   accent-color: red;
   transform: translate(0, 50%);
   transition: all 1s;
-  `;
+}
+.rangeBarContainer {
+  position: absolute;
+  left: 0px;
+  background-color:white;
+  display:flex;
+  align-items:center;
+  justify-content: center;
+  padding: 0;
+  border: none;
+  border-radius: 20px;
+  background-color: #5b5b5b14;
+}
+.rangeBar {
+  flex-shrink: 0;
+  transform: rotate(-90deg);
+}
+`;
+injectCSS(styleSheet);
+
+videoElement = document.querySelector(".video-stream.html5-main-video");
+
+function addProgressBar(videoElement) {
+  let progressBar, videoDimension;
+  const progressBarContainer = document.querySelector("#progress-bar-line");
 
   progressBar = document.createElement("input");
   setMultipleAttributes(progressBar, {
     type: "range",
     max: videoElement.duration,
+    class: "progressBar",
   });
-  progressBar.style = progressBarStyle;
 
   progressBarContainer.appendChild(progressBar);
   progressBar.addEventListener("mousedown", (e) => {
@@ -84,24 +103,8 @@ function createButton(exampleButtonStyle) {
 }
 function addBarDialog(containerDiv, callback = null) {
   let barCont, rangeBar;
-  const rangeBarContainerStyle = `
-    position: absolute;
-    left: 0px;
-    background-color:white;
-    display:flex;
-    align-items:center;
-    justify-content: center;
-    padding: 0;
-    border: none;
-    border-radius: 20px;
-    background-color: #5b5b5b14;
-    `;
-  const rangeBarStyle = `
-    flex-shrink: 0;
-    transform: rotate(-90deg);
-    `;
   barCont = document.createElement("dialog");
-  barCont.style = rangeBarContainerStyle;
+  barCont.setAttribute("class", "rangeBarContainer");
   containerDiv.style.position = "relative";
   barCont.style.bottom = containerDiv.clientHeight + "px";
   barCont.style.width = containerDiv.clientWidth + "px";
@@ -116,7 +119,7 @@ function addBarDialog(containerDiv, callback = null) {
   });
 
   rangeBar = document.createElement("input");
-  rangeBar.style = rangeBarStyle;
+  rangeBar.setAttribute("class", "rangeBar");
   rangeBar.setAttribute("type", "range");
   rangeBar.setAttribute("max", "100");
   rangeBar.style.width = getIntFromPixels(barCont.style.height) - 20 + "px";
@@ -147,6 +150,12 @@ function setMultipleAttributes(element, attributes = {}) {
   Object.entries(attributes).forEach((attr) => {
     element.setAttribute(attr[0], attr[1]);
   });
+}
+function injectCSS(styleString) {
+  let styleTag = document.createElement("style");
+  styleTag.innerHTML = styleSheet;
+  document.head.appendChild(styleTag);
+  return styleTag;
 }
 
 let test = createButtonDialog(adjustVolume);
