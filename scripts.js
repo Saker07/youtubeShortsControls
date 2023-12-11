@@ -1,24 +1,25 @@
-let videoElement, videoDimention;
-let progressBar;
+let videoElement;
 
 videoElement = document.querySelector('.video-stream.html5-main-video');
-progressBar = document.createElement('input');
-progressBar.setAttribute('type', 'range');
-progressBar.setAttribute('max', videoElement.duration);
 
-videoDimension = videoElement.getBoundingClientRect()
-console.log(videoDimension);
+function addProgressBar(videoElement){
+    let progressBar, videoDimension;
+    progressBar = document.createElement('input');
+    progressBar.setAttribute('type', 'range');
+    progressBar.setAttribute('max', videoElement.duration);
 
-videoElement.style.position = 'relative';
-progressBar.style = 'position: absolute; bottom: '+ videoDimension.y +'px ; left: '+ videoDimension.left +'px ; margin: 0; padding: 0; width: ' + videoDimension.width +'px;';
-progressBar.draggable = false;
-document.body.appendChild(progressBar);
+    videoDimension = videoElement.getBoundingClientRect()
 
-progressBar.addEventListener('input', e=>{
-    e.stopPropagation();
-    videoElement.currentTime = e.target.value;
-})
+    videoElement.style.position = 'relative';
+    progressBar.style = 'position: absolute; bottom: '+ videoDimension.y +'px ; left: '+ videoDimension.left +'px ; margin: 0; padding: 0; width: ' + videoDimension.width +'px;';
+    progressBar.draggable = false;
+    document.body.appendChild(progressBar);
 
+    progressBar.addEventListener('input', e=>{
+        e.stopPropagation();
+        videoElement.currentTime = e.target.value;
+    })
+}
 
 
 
@@ -60,7 +61,6 @@ function addBarDialog(btn, callback = null){
     let rangeBarContainer, rangeBar;
     rangeBarContainer = document.createElement('dialog');
     btn.style.position = 'relative';
-    btn.style.display = 'block';
     rangeBarContainer.style.position = 'absolute';
     rangeBarContainer.style.bottom = btn.clientHeight + 'px';
     rangeBarContainer.style.left = '0px';
@@ -106,3 +106,4 @@ function getIntFromPixels(size){
 
 console.log(videoElement.volume)
 let test = createButtonDialog(adjustVolume);
+let progressBarTest = addProgressBar(videoElement);
