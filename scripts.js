@@ -59,18 +59,25 @@ function createButton(exampleButtonStyle){
 }
 function addBarDialog(btn, callback = null){
     let rangeBarContainer, rangeBar;
+    const rangeBarContainerStyle = `
+    position: absolute;
+    left: 0px;
+    background-color:white;
+    display:flex;
+    align-items:center;
+    justify-content: center;
+    padding: 0;
+    `;
+    const rangeBarStyle = `
+    flex-shrink: 0;
+    transform: rotate(-90deg);
+    `
     rangeBarContainer = document.createElement('dialog');
+    rangeBarContainer.style = rangeBarContainerStyle;
     btn.style.position = 'relative';
-    rangeBarContainer.style.position = 'absolute';
     rangeBarContainer.style.bottom = btn.clientHeight + 'px';
-    rangeBarContainer.style.left = '0px';
     rangeBarContainer.style.width = btn.clientWidth + 'px';
     rangeBarContainer.style.height = (btn.clientHeight*10) + 'px';
-    rangeBarContainer.style.backgroundColor = 'white';
-    rangeBarContainer.style.display = 'flex';
-    rangeBarContainer.style.alignItems = 'center';
-    rangeBarContainer.style.justifyContent = 'center';
-    rangeBarContainer.style.padding = '0';
     btn.appendChild(rangeBarContainer);
     btn.addEventListener('mouseover', (e)=>{
         rangeBarContainer.show();
@@ -78,13 +85,11 @@ function addBarDialog(btn, callback = null){
     btn.addEventListener('mouseout', (e)=>{
         rangeBarContainer.close();
     });
-    
     rangeBar = document.createElement('input');
+    rangeBar.style = rangeBarStyle;
     rangeBar.setAttribute('type', 'range');
     rangeBar.setAttribute('max', '100');
-    rangeBar.style.flexShrink = '0';
     rangeBar.style.width = (getIntFromPixels(rangeBarContainer.style.height) - 20) + 'px';
-    rangeBar.style.transform = 'rotate(-90deg)';
     rangeBarContainer.appendChild(rangeBar);
     rangeBar.addEventListener('change', callback)
     return rangeBarContainer;
