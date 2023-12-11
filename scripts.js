@@ -58,8 +58,9 @@ function createButton(exampleButtonStyle) {
     width: exampleButtonStyle.width,
     border: exampleButtonStyle.border,
     borderRadius: exampleButtonStyle.borderRadius,
-    backgroundColor: "green",
+    backgroundColor: "#5b5b5b14",
   };
+
   btn = document.createElement("button");
   btn.setAttribute("type", "button");
   Object.assign(btn.style, btnStyle);
@@ -75,6 +76,9 @@ function addBarDialog(containerDiv, callback = null) {
     align-items:center;
     justify-content: center;
     padding: 0;
+    border: none;
+    border-radius: 20px;
+    background-color: #5b5b5b14;
     `;
   const rangeBarStyle = `
     flex-shrink: 0;
