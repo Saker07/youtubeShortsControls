@@ -174,8 +174,8 @@ function getIntFromPixels(size) {
 }
 
 function setMultipleAttributes(element, attributes = {}) {
-  Object.entries(attributes).forEach((attr) => {
-    element.setAttribute(attr[0], attr[1]);
+  Object.entries(attributes).forEach(([name, value]) => {
+    element.setAttribute(name, value);
   });
 }
 function injectCSS(styleString) {
