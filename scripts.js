@@ -184,5 +184,7 @@ function injectCSS(styleString) {
   return styleTag;
 }
 
-let test = createVolButtonWithDialog(adjustVolume);
-let progressBarTest = addProgressBar(videoElement);
+setTimeout(() => {
+  let test = createVolButtonWithDialog(adjustVolume);
+  let progressBarTest = addProgressBar(videoElement);
+}, 500);
