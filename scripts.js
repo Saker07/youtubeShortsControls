@@ -5,8 +5,10 @@ videoElement = document.querySelector(".video-stream.html5-main-video");
 function addProgressBar(videoElement) {
   let progressBar, videoDimension;
   progressBar = document.createElement("input");
-  progressBar.setAttribute("type", "range");
-  progressBar.setAttribute("max", videoElement.duration);
+  setMultipleAttributes(progressBar, {
+    type: "range",
+    max: videoElement.duration,
+  });
 
   videoDimension = videoElement.getBoundingClientRect();
 
@@ -119,6 +121,12 @@ function getIntFromPixels(size) {
   intSize = parseInt(sizeArr.slice(0, -2).join(""));
 
   return intSize;
+}
+
+function setMultipleAttributes(element, attributes = {}) {
+  Object.entries(attributes).forEach((attr) => {
+    element.setAttribute(attr[0], attr[1]);
+  });
 }
 
 console.log(videoElement.volume);
