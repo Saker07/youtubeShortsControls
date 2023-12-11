@@ -11,6 +11,8 @@ function addProgressBar(videoElement) {
   width: 99%;
   z-index: 2;
   pointer-events: auto;
+  opacity: 0.9;
+  accent-color: red;
   transform: translate(0, 50%);
   `;
 
