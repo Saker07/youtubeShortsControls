@@ -4,26 +4,24 @@ videoElement = document.querySelector(".video-stream.html5-main-video");
 
 function addProgressBar(videoElement) {
   let progressBar, videoDimension;
+  const progressBarContainer = document.querySelector("#progress-bar-line");
+  const progressBarStyle = `
+  position: absolute;
+  bottom: 0;
+  width: 99%;
+  z-index: 2;
+  pointer-events: auto;
+  transform: translate(0, 50%);
+  `;
+
   progressBar = document.createElement("input");
   setMultipleAttributes(progressBar, {
     type: "range",
     max: videoElement.duration,
   });
+  progressBar.style = progressBarStyle;
 
-  videoDimension = videoElement.getBoundingClientRect();
-
-  videoElement.style.position = "relative";
-  progressBar.style =
-    "position: absolute; bottom: " +
-    videoDimension.y +
-    "px ; left: " +
-    videoDimension.left +
-    "px ; margin: 0; padding: 0; width: " +
-    videoDimension.width +
-    "px;";
-  progressBar.draggable = false;
-  document.body.appendChild(progressBar);
-
+  progressBarContainer.appendChild(progressBar);
   progressBar.addEventListener("input", (e) => {
     e.stopPropagation();
     videoElement.currentTime = e.target.value;
@@ -129,6 +127,5 @@ function setMultipleAttributes(element, attributes = {}) {
   });
 }
 
-console.log(videoElement.volume);
 let test = createButtonDialog(adjustVolume);
 let progressBarTest = addProgressBar(videoElement);
