@@ -25,11 +25,23 @@ function addProgressBar(videoElement) {
   progressBar.style = progressBarStyle;
 
   progressBarContainer.appendChild(progressBar);
+  progressBar.addEventListener("mousedown", (e) => {
+    videoElement.pause();
+    document.body.addEventListener(
+      "mouseup",
+      (e) => {
+        if (videoElement.paused) {
+          videoElement.play();
+        }
+      },
+      { once: true }
+    );
+  });
   progressBar.addEventListener("input", (e) => {
     e.stopPropagation();
     videoElement.currentTime = e.target.value;
   });
-  setInterval((e) => {
+  setInterval(() => {
     progressBar.value = videoElement.currentTime;
   });
 }
@@ -108,8 +120,8 @@ function addBarDialog(containerDiv, callback = null) {
   rangeBar.setAttribute("type", "range");
   rangeBar.setAttribute("max", "100");
   rangeBar.style.width = getIntFromPixels(barCont.style.height) - 20 + "px";
-  barCont.appendChild(rangeBar);
 
+  barCont.appendChild(rangeBar);
   rangeBar.addEventListener("change", callback);
 
   return barCont;
