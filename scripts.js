@@ -20,7 +20,8 @@ const styleSheet = `
   padding: 0;
   border: none;
   border-radius: 20px;
-  background-color: #5b5b5b14;
+  background-color: #272727;
+
 }
 .rangeBarContainer[open] {
   display: flex;
@@ -30,8 +31,8 @@ const styleSheet = `
   transform: rotate(-90deg);
 }
 .volumeIcon {
-  height: 100%;
-  width: 100%;
+  height: 90%;
+  width: 90%;
 }
 `;
 injectCSS(styleSheet);
@@ -119,7 +120,7 @@ function createButton(exampleButtonStyle) {
     width: exampleButtonStyle.width,
     border: exampleButtonStyle.border,
     borderRadius: exampleButtonStyle.borderRadius,
-    backgroundColor: "#5b5b5b14",
+    backgroundColor: "#272727",
   };
 
   btn = document.createElement("button");
@@ -134,7 +135,7 @@ function addBarDialog(containerDiv, callback = null) {
   containerDiv.style.position = "relative";
   barCont.style.bottom = containerDiv.clientHeight + "px";
   barCont.style.width = containerDiv.clientWidth + "px";
-  barCont.style.height = containerDiv.clientHeight * 10 + "px";
+  barCont.style.height = containerDiv.clientHeight * 5 + "px";
   containerDiv.appendChild(barCont);
 
   containerDiv.addEventListener("mouseover", (e) => {
