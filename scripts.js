@@ -50,11 +50,13 @@ function createButton(exampleButtonStyle){
     let volumeBtn;
     volumeBtn = document.createElement('button');
     volumeBtn.setAttribute('type', 'button');
-    volumeBtn.style.height = exampleButtonStyle.height;
-    volumeBtn.style.width = exampleButtonStyle.width;
-    volumeBtn.style.border = exampleButtonStyle.border;
-    volumeBtn.style.borderRadius = exampleButtonStyle.borderRadius;
-    volumeBtn.style.backgroundColor = 'green';
+    Object.assign(volumeBtn.style, {
+        height: exampleButtonStyle.height,
+        width: exampleButtonStyle.width,
+        border: exampleButtonStyle.border,
+        borderRadius: exampleButtonStyle.borderRadius,
+        backgroundColor: 'green',
+    });
     return volumeBtn;
 }
 function addBarDialog(btn, callback = null){
