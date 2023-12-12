@@ -46,7 +46,10 @@ function isNewShort() {
       let activeShortContainer = document.querySelector(
         "ytd-reel-video-renderer.reel-video-in-sequence.style-scope.ytd-shorts[is-active]"
       );
-      addVideoControlsToShort(activeShortContainer);
+      if (!activeShortContainer.classList.contains("shorts-controls")) {
+        addVideoControlsToShort(activeShortContainer);
+        activeShortContainer.classList.add("shorts-controls");
+      }
     }, 1000);
   }
 }
