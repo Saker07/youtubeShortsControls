@@ -46,14 +46,14 @@ function isNewShort() {
       let activeShortContainer = document.querySelector(
         "ytd-reel-video-renderer.reel-video-in-sequence.style-scope.ytd-shorts[is-active]"
       );
-      addVideoControls(activeShortContainer);
+      addVideoControlsToShort(activeShortContainer);
     }, 1000);
   }
 }
 
 setInterval(isNewShort, 500);
 
-function addVideoControls(activeShortContainer) {
+function addVideoControlsToShort(activeShortContainer) {
   progressBarContainer =
     activeShortContainer.querySelector("#progress-bar-line");
   videoElement = activeShortContainer.querySelector(
@@ -152,20 +152,21 @@ function createButton(exampleButtonStyle) {
   Object.assign(btn.style, btnStyle);
   return btn;
 }
-function addBarDialog(containerDiv, callback = null) {
+
+function addBarDialog(button, handleChange) {
   let barCont, rangeBar;
   barCont = document.createElement("dialog");
   barCont.setAttribute("class", "rangeBarContainer");
-  containerDiv.style.position = "relative";
-  barCont.style.bottom = containerDiv.clientHeight + "px";
-  barCont.style.width = containerDiv.clientWidth + "px";
-  barCont.style.height = containerDiv.clientHeight * 5 + "px";
-  containerDiv.appendChild(barCont);
+  button.style.position = "relative";
+  barCont.style.bottom = button.clientHeight + "px";
+  barCont.style.width = button.clientWidth + "px";
+  barCont.style.height = button.clientHeight * 5 + "px";
+  button.appendChild(barCont);
 
-  containerDiv.addEventListener("mouseover", (e) => {
+  button.addEventListener("mouseover", (e) => {
     barCont.show();
   });
-  containerDiv.addEventListener("mouseout", (e) => {
+  button.addEventListener("mouseout", (e) => {
     barCont.close();
   });
 
@@ -176,7 +177,7 @@ function addBarDialog(containerDiv, callback = null) {
   rangeBar.style.width = getIntFromPixels(barCont.style.height) - 20 + "px";
 
   barCont.appendChild(rangeBar);
-  rangeBar.addEventListener("change", callback);
+  rangeBar.addEventListener("change", handleChange);
 
   return barCont;
 }
