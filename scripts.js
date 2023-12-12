@@ -37,6 +37,36 @@ const styleSheet = `
 `;
 injectCSS(styleSheet);
 
+let oldLocationHref = window.location.href;
+
+function isNewShort() {
+  if (window.location.href !== oldLocationHref) {
+    oldLocationHref = window.location.href;
+    setTimeout((e) => {
+      let activeShortContainer = document.querySelector(
+        "ytd-reel-video-renderer.reel-video-in-sequence.style-scope.ytd-shorts[is-active]"
+      );
+      addVideoControls(activeShortContainer);
+    }, 1000);
+  }
+}
+
+setInterval(isNewShort, 500);
+
+function addVideoControls(activeShortContainer) {
+  progressBarContainer =
+    activeShortContainer.querySelector("#progress-bar-line");
+  videoElement = activeShortContainer.querySelector(
+    ".video-stream.html5-main-video"
+  );
+  createVolButtonWithDialog(
+    adjustVolume,
+    activeShortContainer.querySelector("#actions"),
+    activeShortContainer.querySelector("#actions > #like-button")
+  );
+  addProgressBar(videoElement);
+}
+
 function addProgressBar(videoElement) {
   let progressBar, videoDimension;
 
@@ -81,8 +111,6 @@ function createVolButtonWithDialog(
   const volumeIconSrc = chrome.runtime.getURL("volumeIcon.svg");
   const mutedIconSrc = chrome.runtime.getURL("mutedIcon.svg");
 
-  defaultButtonContainers; //#actions
-  defaultFirstChildButton; //#actions > #like-button
   defaultButtonStyle = window.getComputedStyle(
     document.querySelector("#actions > #like-button button")
   );
@@ -182,69 +210,6 @@ function injectCSS(styleString) {
 }
 
 /*
-let observedShortsContainer, observer;
-setTimeout(() => {
-  observedShortsContainer = document.querySelector("#shorts-inner-container");
-  observer = new MutationObserver((mutationList) => {
-    mutationList.forEach((mutation) => {
-      if (isNewShort(mutation)) {
-        let videoContainer = document.querySelector(
-          "ytd-reel-video-renderer.reel-video-in-sequence.style-scope.ytd-shorts[is-active]"
-        );
-        console.log(videoContainer);
-        videoElement = videoContainer.querySelector(
-          ".video-stream.html5-main-video"
-        );
-        console.log(videoElement);
-        progressBarContainer =
-          observedShortsContainer.querySelector("#progress-bar-line");
-        let test = createVolButtonWithDialog(adjustVolume);
-        let progressBarTest = addProgressBar(videoElement);
-      }
-    });
-  });
-
-  observer.observe(observedShortsContainer, {
-    childList: true,
-    subtree: true,
-    attributeOldValue: true,
-    attributeFilter: ["is-active"],
-  });
-}, 500);
-
-function isNewShort(mutation) {
-  let returnValue = Array.from(mutation.target.classList).includes(
-    "reel-video-in-sequence"
-  );
-  return returnValue;
-}
-*/
-let oldLocationHref = window.location.href;
-
-function isNewShort() {
-  if (window.location.href !== oldLocationHref) {
-    oldLocationHref = window.location.href;
-    setTimeout((e) => {
-      let videoContainer = document.querySelector(
-        "ytd-reel-video-renderer.reel-video-in-sequence.style-scope.ytd-shorts[is-active]"
-      );
-      progressBarContainer = videoContainer.querySelector("#progress-bar-line");
-      videoElement = videoContainer.querySelector(
-        ".video-stream.html5-main-video"
-      );
-      let test = createVolButtonWithDialog(
-        adjustVolume,
-        videoContainer.querySelector("#actions"),
-        videoContainer.querySelector("#actions > #like-button")
-      );
-      let progressBarTest = addProgressBar(videoElement);
-      console.log("test");
-    }, 1000);
-  }
-}
-
-setInterval(isNewShort, 500);
-
 class VideoObject {
   constructor() {
     this.videoRef;
@@ -253,3 +218,4 @@ class VideoObject {
     this.fisrtButtonRef;
   }
 }
+*/
