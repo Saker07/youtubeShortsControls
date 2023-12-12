@@ -37,7 +37,7 @@ const styleSheet = `
 `;
 injectCSS(styleSheet);
 
-let oldLocationHref = window.location.href;
+let oldLocationHref;
 
 function isNewShort() {
   if (window.location.href !== oldLocationHref) {
