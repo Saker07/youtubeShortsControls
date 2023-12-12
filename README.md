@@ -6,7 +6,6 @@ It adds:
 -Volume control and mute/unmute
 
 To add:
--Re add controls when scrolling to new video
 -Speed control
 
 Credits:
