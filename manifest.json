@@ -15,7 +15,7 @@
   ],
   "web_accessible_resources": [
     {
-      "resources": ["mutedIcon.svg", "volumeIcon.svg"],
+      "resources": ["img/*"],
       "matches": ["https://www.youtube.com/*"],
       "run_at": "document_end"
     }

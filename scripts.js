@@ -1,3 +1,4 @@
+console.log("test");
 let videoElement, progressBarContainer;
 const styleSheet = `
 .progressBar {
@@ -111,8 +112,8 @@ function createVolButtonWithDialog(
   let defaultButtonStyle;
   let btnContainer, btn, volumeImg;
   let rangeBar;
-  const volumeIconSrc = chrome.runtime.getURL("volumeIcon.svg");
-  const mutedIconSrc = chrome.runtime.getURL("mutedIcon.svg");
+  const volumeIconSrc = chrome.runtime.getURL("img/volumeIcon.svg");
+  const mutedIconSrc = chrome.runtime.getURL("img/mutedIcon.svg");
 
   defaultButtonStyle = window.getComputedStyle(
     document.querySelector("#actions > #like-button button")
