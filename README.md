@@ -13,3 +13,4 @@ To add:
 
 Credits:
 Volume icons by Repo https://www.svgrepo.comSVG
+Extension icon by ElisaRiva: https://pixabay.com/illustrations/youtube-video-icon-play-button-1834016/

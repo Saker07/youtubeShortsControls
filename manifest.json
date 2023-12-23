@@ -6,7 +6,9 @@
   "author": {
     "email": "gjoni.klaudio@gmail.com"
   },
-  "icons": {},
+  "icons": {
+    "128": "img/extIcon.png"
+  },
   "content_scripts": [
     {
       "js": ["scripts.js"],
@@ -15,7 +17,7 @@
   ],
   "web_accessible_resources": [
     {
-      "resources": ["mutedIcon.svg", "volumeIcon.svg"],
+      "resources": ["img/*"],
       "matches": ["https://www.youtube.com/*"],
       "run_at": "document_end"
     }
